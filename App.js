@@ -1,36 +1,48 @@
 import React from "react";
-import { StyleSheet, Text, SafeAreaView, FlatList } from "react-native";
+import { StyleSheet, Text, View, ImageBackground } from "react-native";
 import { useFonts } from "expo-font";
-
-
 export default function App() {
-
   const [fontsLoaded] = useFonts({
-    "Roboto-Bold": require("./src/assets/fonts/Roboto-Bold.ttf"),
-    "Roboto-Medium": require("./src/assets/fonts/Roboto-Medium.ttf"),
-    "Roboto-Regular": require("./src/assets/fonts/Roboto-Regular.ttf"),
+    "Roboto-Bold": require("./assets/fonts/roboto-bold.ttf"),
+    "Roboto-Medium": require("./assets/fonts/roboto-medium.ttf"),
+    "Roboto-Regular": require("./assets/fonts/roboto-regular.ttf"),
   });
 
-
-
- if (!fontsLoaded) {
-   return null;
- }
+  if (!fontsLoaded) {
+    return null;
+  }
 
   return (
-    <SafeAreaView style={styles.container}>
-      <Text style={{ fontFamily: "Roboto-Medium", fontSize: 30 }}>
-        Hello All
-      </Text>
-    </SafeAreaView>
+    <View style={styles.container}>
+      <ImageBackground
+        style={styles.image}
+        source={require("./assets/images/bg.jpg")}
+      >
+        <Text style={styles.text}>
+          Lorem Ipsum is simply dummy text of the printing and typesetting
+          industry.
+        </Text>
+      </ImageBackground>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
+    // alignItems: "center",
+    // justifyContent: "center",
     backgroundColor: "#ecf0f1",
+  },
+  text: {
+    fontFamily: "Roboto-Medium",
+    fontSize: 30,
+    color: "white"
+  },
+  image: {
+    flex: 1,
+    resizeMode: "contain",
+    justifyContent: "center",
+    alignItems: "center",
   },
 });
