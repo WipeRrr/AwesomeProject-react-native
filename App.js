@@ -1,48 +1,49 @@
-import React from "react";
-import { StyleSheet, Text, View, ImageBackground } from "react-native";
-import { useFonts } from "expo-font";
-export default function App() {
-  const [fontsLoaded] = useFonts({
-    "Roboto-Bold": require("./assets/fonts/roboto-bold.ttf"),
-    "Roboto-Medium": require("./assets/fonts/roboto-medium.ttf"),
-    "Roboto-Regular": require("./assets/fonts/roboto-regular.ttf"),
-  });
+import { StatusBar } from "expo-status-bar";
+import {
+  StyleSheet,
+  ImageBackground,
+  View,
+  TouchableWithoutFeedback,
+  Keyboard,
+} from "react-native";
+import React, { useState } from "react";
+import RegistrationScreen from "./src/Screens/RegistrationScreen";
+import LoginScreen from "./src/Screens/LoginScreen";
+const backgroundImage = require("./assets/images/bg.jpg");
 
-  if (!fontsLoaded) {
-    return null;
-  }
+export default function App() {
+  const [activeScreen, setActiveScreen] = useState(0);
+  const changeScreenFunction = (value) => {
+    setActiveScreen(value);
+  };
 
   return (
-    <View style={styles.container}>
-      <ImageBackground
-        style={styles.image}
-        source={require("./assets/images/bg.jpg")}
-      >
-        <Text style={styles.text}>
-          Lorem Ipsum is simply dummy text of the printing and typesetting
-          industry.
-        </Text>
-      </ImageBackground>
-    </View>
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <View style={styles.mainContainer}>
+        <ImageBackground
+          source={backgroundImage}
+          style={styles.backgroundImage}
+        >
+          {activeScreen === 0 ? (
+            <LoginScreen changeScreen={changeScreenFunction} />
+          ) : (
+            <RegistrationScreen changeScreen={changeScreenFunction} />
+          )}
+        </ImageBackground>
+        <StatusBar style="auto" />
+      </View>
+    </TouchableWithoutFeedback>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
+  mainContainer: {
     flex: 1,
-    // alignItems: "center",
-    // justifyContent: "center",
-    backgroundColor: "#ecf0f1",
-  },
-  text: {
-    fontFamily: "Roboto-Medium",
-    fontSize: 30,
-    color: "white"
-  },
-  image: {
-    flex: 1,
-    resizeMode: "contain",
-    justifyContent: "center",
     alignItems: "center",
+  },
+  backgroundImage: {
+    flex: 1,
+    justifyContent: "flex-end",
+    width: "100%",
   },
 });
